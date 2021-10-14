@@ -2,6 +2,8 @@ import React from 'react';
 import { Edit, DisabledInput, AutocompleteInput, SimpleForm, TextInput, NumberInput } from 'admin-on-rest/lib/mui';
 import {SERVER_URL} from '../../config';
 import axios from 'axios';
+import { GET_LIST } from 'admin-on-rest';
+import restClient from '../../restClient';
 
 const Title = ({record}) => {
     return <span>Raw Material #{ record ? `${record.name}`: '' }</span>;
@@ -17,10 +19,15 @@ export class  RawMaterialEdit extends React.Component {
         };
     }
 
-    fetchUnitsOfMeasure = () => axios.get(SERVER_URL + '/units-of-measure-list-only');
+    /*fetchUnitsOfMeasure = () => axios.get(SERVER_URL + '/units-of-measure-list-only');
     fetchColors = () => axios.get(SERVER_URL + '/color-list-only');
     fetchVendors = () => axios.get(SERVER_URL + '/vendor-list-only');
-    fetchRawMaterialTypes = () => axios.get(SERVER_URL + '/raw-material-type-list-only');
+    fetchRawMaterialTypes = () => axios.get(SERVER_URL + '/raw-material-type-list-only');*/
+    
+    fetchUnitsOfMeasure = () => restClient(GET_LIST, 'units-of-measure-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
+    fetchColors = () => restClient(GET_LIST, 'color-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
+    fetchVendors = () => restClient(GET_LIST, 'vendor-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
+    fetchRawMaterialTypes = () => restClient(GET_LIST, 'raw-material-type-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
 
     componentDidMount() {
         axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
