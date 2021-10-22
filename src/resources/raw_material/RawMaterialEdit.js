@@ -41,9 +41,9 @@ export class  RawMaterialEdit extends React.Component {
                 this.setState({units_of_measures, colors, vendors, raw_material_types});
             }));
 	}
-    componentWillMount() {
+    /*componentWillMount() {
 		this.fetchApiCall();
-    }
+    }*/
     
     componentDidMount(){
 		this.fetchApiCall();
@@ -51,7 +51,6 @@ export class  RawMaterialEdit extends React.Component {
 	
 	componentDidUpdate(){
 		if(this.load==false){
-			console.log("Here===============================>");
 			this.fetchApiCall();
 			this.load = true;
 		}
