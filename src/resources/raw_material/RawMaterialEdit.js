@@ -18,6 +18,7 @@ export class  RawMaterialEdit extends React.Component {
             vendors: [],
             raw_material_types: [],
         };
+        this.load=0;
     }
 
     /*fetchUnitsOfMeasure = () => axios.get(SERVER_URL + '/units-of-measure-list-only');
@@ -38,27 +39,21 @@ export class  RawMaterialEdit extends React.Component {
                 const vendors = response3.data.map(data => ({id: data.id, name: data.name}));
                 const raw_material_types = response4.data.map(data => ({id: data.id, name: data.name}));
                 this.setState({units_of_measures, colors, vendors, raw_material_types});
+                this.load =1;
             }));
 	}
-    componentWillMount() {
+    /*componentWillMount() {
 		this.fetchApiCall();
-        /*axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
-            .then(axios.spread((response1, response2, response3, response4) => {
-                const units_of_measures = response1.data.map(data => ({id: data.id, name: data.name}));
-                const colors = response2.data.map(data => ({id: data.id, name: data.name}));
-                const vendors = response3.data.map(data => ({id: data.id, name: data.name}));
-                const raw_material_types = response4.data.map(data => ({id: data.id, name: data.name}));
-                this.setState({units_of_measures, colors, vendors, raw_material_types});
-            }));*/
     }
     
     componentDidMount(){
 		this.fetchApiCall();
-	}
+	}*/
 	
 	componentDidUpdate(){
-		this.fetchApiCall();
-		return false;
+		if(this.load==0){
+			this.fetchApiCall();
+		}
 	}
 
     render () {
