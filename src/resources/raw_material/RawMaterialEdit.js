@@ -45,9 +45,9 @@ export class  RawMaterialEdit extends React.Component {
 		this.fetchApiCall();
     }
     
-    /*componentDidMount(){
+    componentDidMount(){
 		this.fetchApiCall();
-	}*/
+	}
 	
 	componentDidUpdate(){
 		if(this.load==false){
