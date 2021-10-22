@@ -31,7 +31,7 @@ export class  RawMaterialEdit extends React.Component {
     fetchVendors = () => restClient(GET_LIST, 'vendor-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
     fetchRawMaterialTypes = () => restClient(GET_LIST, 'raw-material-type-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
 	
-	fetchApiCall(){
+	async fetchApiCall(){
 		axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
             .then(axios.spread((response1, response2, response3, response4) => {
                 const units_of_measures = response1.data.map(data => ({id: data.id, name: data.name}));
@@ -41,17 +41,17 @@ export class  RawMaterialEdit extends React.Component {
                 this.setState({units_of_measures, colors, vendors, raw_material_types});
             }));
 	}
-    componentWillMount() {
-		this.fetchApiCall();
+    async componentWillMount() {
+		await this.fetchApiCall();
     }
     
-    componentDidMount(){
-		this.fetchApiCall();
+    async componentDidMount(){
+		await this.fetchApiCall();
 	}
 	
-	componentDidUpdate(){
+	async componentDidUpdate(){
 		if(this.load==false){
-			this.fetchApiCall();
+			await this.fetchApiCall();
 			this.load = true;
 		}
 	}
