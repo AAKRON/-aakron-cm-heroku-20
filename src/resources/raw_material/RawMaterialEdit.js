@@ -50,7 +50,7 @@ export class  RawMaterialEdit extends React.Component {
 	}*/
 	
 	componentDidUpdate(){
-		if(!this.load){
+		if(this.load==false){
 			console.log("Here===============================>");
 			this.fetchApiCall();
 			this.load = true;
