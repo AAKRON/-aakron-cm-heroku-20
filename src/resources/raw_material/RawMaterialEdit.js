@@ -5,6 +5,7 @@ import axios from 'axios';
 import { GET_LIST } from 'admin-on-rest';
 import restClient from '../../restClient';
 
+
 const Title = ({record}) => {
     return <span>Raw Material #{ record ? `${record.name}`: '' }</span>;
 };
@@ -28,9 +29,9 @@ export class  RawMaterialEdit extends React.Component {
     fetchColors = () => restClient(GET_LIST, 'color-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
     fetchVendors = () => restClient(GET_LIST, 'vendor-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
     fetchRawMaterialTypes = () => restClient(GET_LIST, 'raw-material-type-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
-
-    componentWillMount() {
-        axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
+	
+	fetchApiCall(){
+		axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
             .then(axios.spread((response1, response2, response3, response4) => {
                 const units_of_measures = response1.data.map(data => ({id: data.id, name: data.name}));
                 const colors = response2.data.map(data => ({id: data.id, name: data.name}));
@@ -38,7 +39,22 @@ export class  RawMaterialEdit extends React.Component {
                 const raw_material_types = response4.data.map(data => ({id: data.id, name: data.name}));
                 this.setState({units_of_measures, colors, vendors, raw_material_types});
             }));
+	}
+    componentWillMount() {
+		this.fetchApiCall();
+        /*axios.all([this.fetchUnitsOfMeasure(), this.fetchColors(), this.fetchVendors(), this.fetchRawMaterialTypes()])
+            .then(axios.spread((response1, response2, response3, response4) => {
+                const units_of_measures = response1.data.map(data => ({id: data.id, name: data.name}));
+                const colors = response2.data.map(data => ({id: data.id, name: data.name}));
+                const vendors = response3.data.map(data => ({id: data.id, name: data.name}));
+                const raw_material_types = response4.data.map(data => ({id: data.id, name: data.name}));
+                this.setState({units_of_measures, colors, vendors, raw_material_types});
+            }));*/
     }
+    
+    componentDidMount(){
+		this.fetchApiCall();
+	}
 
     render () {
         return(

@@ -22,14 +22,22 @@ export class  ItemEdit extends React.Component {
 
 	fetchBoxes = () => restClient(GET_LIST, 'box-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
 	fetchItemTypes = () => restClient(GET_LIST, 'item-type-list-only', {pagination: { page: 1, perPage: -1 }, sort: { field: 'id', order: 'ASC' }});
-
-	componentWillMount() {
+	
+	fetchApiCall(){
 		axios.all([this.fetchBoxes(), this.fetchItemTypes()])
 				.then(axios.spread((box, item_type) => {
 						const boxes = box.data.map(box => ({id: box.id, name: box.name}));
 						const item_types = item_type.data.map(item_type => ({id: item_type.type_number, name: item_type.description}));
 						this.setState({boxes, item_types});
 				}));
+	}
+	
+	componentWillMount() {
+		this.fetchApiCall();
+	}
+	
+	componentDidMount(){
+		this.fetchApiCall();
 	}
 
 	render () {
