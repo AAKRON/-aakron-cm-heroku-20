@@ -87,7 +87,7 @@ export default class JobTable extends React.Component {
     const { EditIndex, EditableJob } = this.state;
 
     const tempJob = this.state.item_jobs;
-    tempJob[EditIndex] = { ...EditableJob };
+    tempJob[EditIndex] = { ...EditableJob, selected: false };
     this.setState({
       item_jobs: tempJob,
       open: false,
@@ -183,6 +183,12 @@ export default class JobTable extends React.Component {
     this.setState({
       id: vale[0],
       description: vale[1],
+      EditableJob: {
+        ...this.state.EditableJob,
+        job_listing_id: Number(vale[0]),
+        job_number: Number(vale[0]),
+        description: vale[1],
+      },
     });
     console.log(data);
   };
